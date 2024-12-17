@@ -2,7 +2,7 @@
 
 function App() {
   return (
-   <h1>Chat - App</h1>
+   <h1 className="text-3xl font-bold underline">Chat - App</h1>
   );
 }
 
