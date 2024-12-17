@@ -14,7 +14,7 @@ const Popup = ({isOpen,setIsOpen}) => {
   
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div >
         {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
          
