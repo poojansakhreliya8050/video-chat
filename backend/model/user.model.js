@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    username: {
+    name: {
         type: String,
         required: true,
-        unique: true,
     },
     password: {
         type: String,
@@ -29,6 +28,13 @@ userSchema.pre('save', async function(next) {
         next();
     }
     this.password = await bcrypt.hash(this.password, 12);
+    next();
+});
+
+//hook for transfor lowercase email and name
+userSchema.pre('save', function(next) {
+    this.email = this.email.toLowerCase();
+    this.name = this.name.toLowerCase();
     next();
 });
 

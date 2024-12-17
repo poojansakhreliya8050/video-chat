@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import twoPeopleMeeting from '../assets/twoPeopleMeeting.webp'
 import { useState } from 'react';
 import Popup from '../component/Popup';
 import { FaVideo } from "react-icons/fa";
 import { FaKeyboard } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 
 const Home = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [code, setCode] = useState('');
+
+  const user = useSelector(state => state.user);
+  // console.log(user);
+  
 
 
   return (
@@ -24,7 +29,7 @@ const Home = () => {
         </h1>
 
         <p className="text-gray-600 text-lg">
-          Connect, collaborate, and celebrate from anywhere with Google Meet
+          Connect, collaborate, and celebrate from anywhere with Our Meet
         </p>
 
         <div className="flex items-center space-x-4">
@@ -63,7 +68,7 @@ const Home = () => {
 
         <h2 className="text-lg font-semibold text-gray-800 mt-4">Plan ahead</h2>
         <p className="text-gray-600 text-center mt-2">
-          Click <span className="font-bold">New meeting</span> to schedule meetings in Google Calendar and send invites to participants.
+          Click <span className="font-bold">New meeting</span> to create new meeting or Enter code to join meeting.
         </p>
 
      

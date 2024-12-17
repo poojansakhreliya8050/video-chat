@@ -1,11 +1,14 @@
-import React,{useState} from 'react'
+import React,{use, useState} from 'react'
 import { Link,useNavigate } from 'react-router'
 import videoimg from '../assets/video-chat.webp'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import {userReceived} from '../redux/userSlice'
 
 const Login = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const [user, setUser] = useState({
     email: '',
@@ -18,8 +21,9 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      let data=await axios.post(`${process.env.REACT_APP_API_URL}user/login`, user);
+      let data=await axios.post(`${process.env.REACT_APP_API_URL}/user/login`, user);
       console.log(data);
+      dispatch(userReceived(data.data));
       navigate('/');
     } catch (err) {
       console.log(err)

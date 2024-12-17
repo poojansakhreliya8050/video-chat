@@ -3,12 +3,14 @@ import { Routes, Route } from 'react-router';
 import Login from './page/Login';
 import Register from './page/Register';
 import Home from './page/Home';
+import VideoChat from './page/VideoChat';
 
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home/>} />
+      <Route path="/videoChat/:roomid" element={<VideoChat/>}/> 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="*" element={<Login />} />
