@@ -1,8 +1,22 @@
+import React from 'react';
+import { Routes, Route } from 'react-router';
+import Login from './page/Login';
+import Register from './page/Register';
+import Home from './page/Home';
 
 
 function App() {
   return (
-   <h1 className="text-3xl font-bold underline">Chat - App</h1>
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="*" element={<Login />} />
+      {/* <Route path="dashboard" element={<Dashboard />}>
+        <Route index element={<RecentActivity />} />
+        <Route path="project/:id" element={<Project />} />
+      </Route> */}
+    </Routes>
   );
 }
 
