@@ -26,27 +26,26 @@ io.on('connection', (socket) => {
     });
 
     socket.on('join-room', (roomId, userId) => {
+        // console.log('user joined room: ' + roomId +" with id: "+userId);
         socket.join(roomId);
-        console.log('user joined room: ' + roomId +" with id: "+userId);
         socket.to(roomId).emit('user-connected', userId);
     });
 
     //when user join then user also send offer
     socket.on('offer', (data) => {
-        console.log('offer from: ' + socket.id + " to: " + data.to);
+        // console.log('offer from: ' + socket.id + " to: " + data.to);
         socket.to(data.to).emit('offer', {offer:data.offer,from:socket.id,to:data.to});
     });
 
     //when user send answer
     socket.on('answer', (data) => {
-        console.log('answer from: ' + socket.id+ " to: " + data.to);
+        // console.log('answer from: ' + socket.id+ " to: " + data.to);
         socket.to(data.to).emit('answer', {answer:data.answer,from:socket.id,to:data.to});
     });
 
     //when user send ice candidate
     socket.on('ice-candidate', (data) => {
-        console.log(data);
-        console.log('ice-candidate from: ' + socket.id + " to: " + data.to);
+        // console.log('ice-candidate from: ' + socket.id + " to: " + data.to);
         socket.to(data.to).emit('ice-candidate', {candidate:data.candidate,from:socket.id,to:data.to});
     });
 

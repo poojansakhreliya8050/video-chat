@@ -96,6 +96,20 @@ const getUsersInRoom = async (req, res) => {
     }
 }
 
+//room exist or not
+const roomExist = async (req, res, next) => {
+    try {
+        const room = await Room.findById(req.params.id);
+        if (!room) {
+            return res.status(404).send('Room not found');
+        }
+        req.room = room;
+        next();
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
 
 
 module.exports = {
@@ -106,4 +120,5 @@ module.exports = {
     addUserToRoom,
     removeUserFromRoom,
     getUsersInRoom,
+    roomExist
 }
