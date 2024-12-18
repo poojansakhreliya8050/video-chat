@@ -5,6 +5,7 @@ import Popup from '../component/Popup';
 import { FaVideo } from "react-icons/fa";
 import { FaKeyboard } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 const Home = () => {
@@ -15,8 +16,14 @@ const Home = () => {
   const user = useSelector(state => state.user);
   // console.log(user);
   
-
-
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!user.user) {
+      navigate('/login');
+    }
+  }, []);
+  
   return (
 
     <div>
