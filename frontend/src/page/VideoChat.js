@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { FaVideo, FaVideoSlash } from "react-icons/fa";
 import { AiOutlineAudio, AiOutlineAudioMuted } from "react-icons/ai";
 import { MdCallEnd } from "react-icons/md";
+import darkBg from "../assets/dark-background.webp";
 import ToggleButton from '../component/ToggleButton';
 
 
@@ -28,14 +29,14 @@ const VideoChat = () => {
   const roomid = useParams().roomid;
 
   const startMediaStream = async () => {
-    localStream.current = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    localStream.current = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: true });
     addVideoStream(user, localStream.current);
   };
 
   const addVideoStream = (label, stream) => {
     if (!document.getElementById(label)) {
       const video = document.createElement("video");
-      video.style = "height: 300px; width: 30vw; border: 2px solid black";
+      video.style = "height: 370px; width: 640px; border: 2px solid black";
       video.srcObject = stream;
       video.id = label;
       video.autoplay = true;
@@ -175,7 +176,14 @@ const VideoChat = () => {
 
   return (
     <>
-      <div id='videos'>VideoChat-{roomid}</div>
+     
+     
+      <div className=" h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${darkBg})` }}>
+        <div id="videos" className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+
+      
+    
 
       <div className="fixed bottom-0 left-0 right-0 flex items-center justify-center space-x-4 p-4 ">
         <ToggleButton handleEvent={toggleCamera}>
