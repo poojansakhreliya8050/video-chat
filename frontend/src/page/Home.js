@@ -23,11 +23,11 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user.user) {
-      navigate('/login');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user.user) {
+  //     navigate('/login');
+  //   }
+  // }, []);
 
   const joinMeeting = () => {
     if (code != '') {

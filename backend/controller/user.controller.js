@@ -1,11 +1,15 @@
 const User = require('../model/user.model');
 const Room = require('../model/room.model');
+const {generateToken} = require('../utils/jwt'); 
+const jwt = require('jsonwebtoken');
 
 const userRegister = async (req, res) => {
     try {
         const user = new User(req.body);
         await user.save();
-        res.status(201).json(user);
+        const jwtToken= generateToken(user._id);
+        res.cookie("token",jwtToken,{httpOnly:true,maxAge:7 * 24 * 60 * 60 * 1000,secure:false});
+        res.status(200).json(user);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -21,12 +25,43 @@ const userLogin = async (req, res) => {
         if (!isMatch) {
             return res.status(400).send('Invalid password');
         }
+        const jwtToken=generateToken(user._id);
+        res.cookie("token",jwtToken,{httpOnly:true,maxAge:7 * 24 * 60 * 60 * 1000,secure:false});
         res.status(200).json(user);
     }
     catch (error) {
         res.status(400).send(error);
     }
 }
+
+const userLogout = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        res.status(200).send('Logout successfully');
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
+const me = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).send('Please authenticate');
+        }
+        const jwtToken= jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findOne({ _id: jwtToken.id});
+        if (!user) {
+            return res.status(401).send('user not found');
+        }
+        res.status(200).json(user);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(401).send('Please authenticate');
+    }
+}
+
 
 
 //create room for user to join
@@ -115,6 +150,8 @@ const roomExist = async (req, res, next) => {
 module.exports = {
     userRegister,
     userLogin,
+    userLogout,
+    me,
     createRoom,
     deleteRoom,
     addUserToRoom,

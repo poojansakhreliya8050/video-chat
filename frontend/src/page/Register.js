@@ -21,7 +21,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      let data=await axios.post(`${process.env.REACT_APP_API_URL}/user/register`, user);
+      let data=await axios.post(`${process.env.REACT_APP_API_URL}/user/register`, user, { withCredentials: true });
       console.log(data);
       navigate('/');
 

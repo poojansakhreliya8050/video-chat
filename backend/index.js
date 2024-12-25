@@ -1,19 +1,25 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const http = require('http').createServer(app);
 require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', 
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/api/v1', require('./router/v1'));
 
 const io = require('socket.io')(http, {
     cors: {
         origin: '*',
+        
     }
 });
 
